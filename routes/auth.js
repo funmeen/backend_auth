@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
         const user = new User({
             username: req.body.username,
             password: hashedPassword,
-            role: 'user'
+            role: 2001
         });
 
         // Save the new user to the database
@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1m' } // Access token expires in 1 minutes
+        { expiresIn: '5m' } // Access token expires in 1 minutes
     );
 
     const refreshToken = jwt.sign(
@@ -99,6 +99,50 @@ router.get('/user', verifyToken, permit('user', 'admin'), (req, res) =>{
 
 router.get('/admin', verifyToken, permit('admin'), (req, res) =>{
     res.send('Welcome, admin!');
+});
+
+// Route to fetch user data based on username
+router.get('/:username', async (req, res) => {
+    try {
+      const username = req.params.username;
+  
+      // Query the database to find the user by username
+      const user = await User.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Return user data as JSON response
+      res.json(user);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+// Define the route to handle user profile update
+router.post('/profile', verifyToken, async (req, res) => {
+    try {
+        const { firstName, middleName, lastName, age } = req.body;
+
+        // Update the user profile in the database
+        const userId = req.user._id;
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { firstName, middleName, lastName, age },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully', user });
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 module.exports = router;

@@ -1,19 +1,17 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-    console.log('Verifying Token');
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-    if(!token) return res.status(400).send('Invalid Token');
+    if (!token) return res.status(401).send('Access Denied');
 
-    try{
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
+    try {
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        req.user = verified.UserInfo;
         console.log('Token Verified');
         next();
-    }
-    catch (error){
-        console.log('Token verification failed');
-        res.status(400).send('Invalid Token');
+    } catch (error) {
+        console.error('Token verification failed:', error);
+        res.status(403).send('Invalid Token');
     }
 };
 
