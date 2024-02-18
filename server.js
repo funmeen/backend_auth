@@ -2,8 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
 
 const app = express();
 
@@ -21,12 +19,6 @@ app.use(cors({
 const userRouter = require('./routes/auth');
 app.use('/api/user', userRouter);
 
-const privateKey = fs.readFileSync('/etc/ssl/private.key', 'utf8');
-const certificate = fs.readFileSync('/etc/ssl/certificate.crt', 'utf8');
-const credentials = { key: privateKey, cert: certificate };
-
-const httpsServer = https.createServer(credentials, app);
-
-httpsServer.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
