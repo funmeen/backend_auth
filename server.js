@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://testauthorization.netlify.app',
+    origin: 'https://testauthorization1.netlify.app',
     credentials: true
 }))
 
