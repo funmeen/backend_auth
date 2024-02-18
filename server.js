@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 
 // Load SSL certificate and private key
-const privateKey = fs.readFileSync('/etc/ssl/private/private.key', 'utf8');
+const privateKey = fs.readFileSync('/etc/ssl/private.key', 'utf8');
 const certificate = fs.readFileSync('/etc/ssl/certificate.crt', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
