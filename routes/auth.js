@@ -6,8 +6,8 @@ const User = require('../models/User');
 const { verifyToken, permit } = require('../middleware/middleware');
 
 //test
-router.get('/test', (req, res) => {
-    res.send('The test route is working');
+router.get('/', (req, res) => {
+    res.send('Welcome to backend');
 });
 
 //Register User
