@@ -12,12 +12,12 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://testauthorization1.netlify.app',
+    origin: 'https://testauthorization.netlify.app',
     credentials: true
 }))
 
 const userRouter = require('./routes/auth');
-app.use('/api/user', userRouter);
+app.use('/', userRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
