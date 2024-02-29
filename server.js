@@ -3,34 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
-const path = require('path'); // Import the path module
+
+const file = fs.readFileSync('./6C10D3FAEA175C2D5F286451A67B947E.txt');
 
 const app = express();
-
+const port = 4000
 mongoose.connect(process.env.MONGODB_URI)
         .then(() => console.log('MongoDB Connected'))
         .catch((err) => console.log(err));
 
 app.use(express.json());
-app.use(cors());
 
-// Read the file asynchronously and store it in a variable
-let fileContent;
-fs.readFile(path.join(__dirname, '6C10D3FAEA175C2D5F286451A67B947E.txt'), (err, data) => {
-    if (err) {
-        console.error('Error reading file:', err);
-    } else {
-        fileContent = data;
-    }
-});
+app.use(cors())
 
-// Endpoint to serve the file
 app.get('/.well-known/pki-validation/6C10D3FAEA175C2D5F286451A67B947E.txt', (req, res) => {
-    if (fileContent) {
-        res.send(fileContent); // Send the file content
-    } else {
-        res.status(500).send('File not found'); // Handle the case when fileContent is not available
-    }
+    res.sendFile('/home/ec2-user/backend_auth/6C10D3FAEA175C2D5F286451A67B947E.txt')
 });
 
 const userRouter = require('./routes/auth');
