@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const fs = require('fs');
+
+const file = fs.readFileSync('./6C10D3FAEA175C2D5F286451A67B947E.txt');
 
 const app = express();
 
@@ -11,10 +14,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use(express.json());
 
-app.use(cors({
-    origin: 'https://testauthorization.netlify.app',
-    credentials: true
-}))
+app.use(cors())
 
 const userRouter = require('./routes/auth');
 app.use('/', userRouter);
@@ -22,3 +22,7 @@ app.use('/', userRouter);
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });
+
+app.get('/.well-known/pki-validation/6C10D3FAEA175C2D5F286451A67B947E.txt', (req, res) => {
+    res.sendFile('./6C10D3FAEA175C2D5F286451A67B947E.txt')
+})
