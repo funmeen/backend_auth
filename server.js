@@ -13,8 +13,8 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 app.use(cors());
 
-const userRouter = require('./routes/auth');
-app.use('/', userRouter);
+//const userRouter = require('./routes/auth');
+//app.use('/', userRouter);
 
 // Define the file path to the validation file
 const validationFilePath = path.join(__dirname, '17BAD38A48CDD7A3E164DDA9C91C2198.txt');
