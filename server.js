@@ -20,7 +20,7 @@ const userRouter = require('./routes/auth');
 app.use('/', userRouter);
 
 app.get('/.well-known/pki-validation/17BAD38A48CDD7A3E164DDA9C91C2198.txt',(req, res) => {
-    res.sendFile('/backend_auth/17BAD38A48CDD7A3E164DDA9C91C2198.txt')
+    res.sendFile('home/ec2_user/backend_auth/17BAD38A48CDD7A3E164DDA9C91C2198.txt')
 });
 
 app.listen(process.env.PORT, () => {
