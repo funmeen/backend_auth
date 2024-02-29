@@ -73,7 +73,11 @@ router.post('/login', async (req, res) => {
         { expiresIn: '4m' } // Refresh token expires in 4 minutes
     );
 
-    res.header('auth-token', accessToken).send({ accessToken, refreshToken, role: user.role });
+     // Set the Access-Control-Allow-Origin header
+     res.header('Access-Control-Allow-Origin', 'https://testauthorization.netlify.app');
+
+     // Send the response with tokens and user role
+     res.header('auth-token', accessToken).send({ accessToken, refreshToken, role: user.role });
 });
 
 router.post('/token', (req, res) => {
