@@ -10,6 +10,10 @@ router.get('/', (req, res) => {
     res.send('Welcome to backend');
 });
 
+router.get('/test', (req, res) => {
+    res.send('Test is working');
+});
+
 //Register User
 router.post('/register', async (req, res) => {
     try {
