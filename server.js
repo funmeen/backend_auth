@@ -11,11 +11,24 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 app.use(express.json());
 
-// Configure CORS middleware to allow all origins and credentials for all routes
+// Define allowed origins
+const allowedOrigins = ['https://testauthorization.netlify.app'];
+
+// Configure CORS middleware
 app.use(cors({
-  origin: "https://testauthorization.netlify.app",
-  credentials: true
+  origin: function (origin, callback) {
+    // Check if the request origin is allowed
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true // Allow credentials
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 const userRouter = require('./routes/auth');
 app.use('/', userRouter);
