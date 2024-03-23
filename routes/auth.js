@@ -42,6 +42,7 @@ router.post('/register', async (req, res) => {
             username: savedUser.username,
             role: savedUser.role
         });
+        res.header('Access-Control-Allow-Origin', 'https://testauthorization.netlify.app');
     } catch (error) {
         console.error('Registration failed:', error);
         res.status(500).send('Registration failed');
