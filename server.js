@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Configure CORS middleware to allow all origins and credentials for all routes
 app.use(cors({
-  origin: true,
+  origin: "https://testauthorization.netlify.app",
   credentials: true
 }));
 
