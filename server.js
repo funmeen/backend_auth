@@ -11,7 +11,10 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use(express.json());
 
-app.use(cors())
+app.use(cors({
+    origin: 'https://testauthorization.netlify.app', // Replace with your frontend URL
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+}));
 
 const userRouter = require('./routes/auth');
 app.use('/', userRouter);
